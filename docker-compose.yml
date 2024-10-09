@@ -3,13 +3,13 @@ version: '3.8'
 services:
   frontend:
     build:
-      context: ./frontend
+      context: ./biiip-front
       dockerfile: Dockerfile
     container_name: biiip-frontend
     ports:
       - '5173:5173'
     volumes:
-      - ./frontend:/app
+      - ./biiip-front:/app
       - /app/node_modules
     networks:
       - biiip-network
@@ -21,20 +21,20 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./biiip-back
       dockerfile: Dockerfile
     container_name: biiip-backend
     ports:
       - '3000:3000'
     volumes:
-      - ./backend:/app
+      - ./biiip-back:/app
       - /app/node_modules
     networks:
       - biiip-network
     depends_on:
       - db
     env_file:
-      - ./backend/.env
+      - ./biiip-back/.env
 
   db:
     image: mysql:8.0
