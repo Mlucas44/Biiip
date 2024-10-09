@@ -15,7 +15,7 @@ services:
       - backend
     command: npm run dev
     environment:
-      - VITE_BACKEND_URL=http://51.75.143.134:3000/
+      - VITE_BACKEND_URL=http://51.75.143.134:3000
 
   backend:
     build:
