@@ -1,0 +1,46 @@
+services:
+  backend:
+    build: .
+    container_name: biiip-backend
+    ports:
+      - "3000:3000"
+    networks:
+      - biiip-network
+    depends_on:
+      - db
+    env_file:
+    - ./.env
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-database
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: biiip_db
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - biiip-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: my-phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    depends_on:
+      - db
+    networks:
+      - biiip-network
+
+networks:
+  biiip-network:
+
+volumes:
+  db-data:
