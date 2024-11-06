@@ -1,18 +1,26 @@
-import biiipLogo from '../public/images/biiip-logo.png'
-import UsersList from './components/UsersList';
-import './App.css'
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute';
 
-function App () {
+function App() {
   return (
-    <>
-      <div className="flex justify-center items-center h-screen">
-        <img src={biiipLogo} alt="Biiip Logo" className="w-1/3" />
-      </div>
-      <div className="App">
-        <UsersList />
-      </div>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

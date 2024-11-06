@@ -1,6 +1,7 @@
 // models/User.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
+const bcrypt = require('bcryptjs');
 
 const User = sequelize.define('User', {
   name: {
@@ -12,9 +13,19 @@ const User = sequelize.define('User', {
     allowNull: false,
     unique: true,
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 }, {
   tableName: 'users',
   timestamps: false,
+});
+
+// Avant de sauvegarder, hasher le mot de passe
+User.beforeCreate(async (user, options) => {
+  const hashedPassword = await bcrypt.hash(user.password, 10);
+  user.password = hashedPassword;
 });
 
 module.exports = User;
