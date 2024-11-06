@@ -1,9 +1,8 @@
-// src/components/Login.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
-function Login() {
+function Login () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
@@ -12,7 +11,6 @@ function Login() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Si le token existe, rediriger vers la page protégée
       setRedirect(true);
     }
   }, []);
@@ -37,12 +35,12 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full bg-white p-8 rounded shadow">
-        <h2 className="text-2xl font-bold mb-6 text-center">Connexion</h2>
+    <div className="min-h-screen flex items-center justify-center bg-fond px-4 sm:px-6 lg:px-8">
+      <div className="bg-white p-8 rounded-lg shadow-2xl space-y-8 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto">
+        <h2 className="text-4xl font-semibold text-center text-principale">Bienvenue chez Biiip</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-gray-700">Adresse email</label>
+            <label htmlFor="email" className="block text-base font-medium text-principale">Adresse email</label>
             <input
               id="email"
               type="email"
@@ -50,11 +48,11 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
+              className="mt-2 w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-principale focus:ring-2 focus:ring-principale"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-gray-700">Mot de passe</label>
+            <label htmlFor="password" className="block text-base font-medium text-principale">Mot de passe</label>
             <input
               id="password"
               type="password"
@@ -62,21 +60,26 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="mt-1 w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-indigo-500"
+              className="mt-2 w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-principale focus:ring-2 focus:ring-principale"
             />
           </div>
-          {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
-
+          {errorMessage && (
+            <p className="text-secondaire-rouge text-sm text-center">{errorMessage}</p>
+          )}
           <button
             type="submit"
-            className="w-full py-3 bg-indigo-600 text-white rounded hover:bg-indigo-500 focus:outline-none"
+            className="w-full py-4 bg-principale text-white text-lg rounded-lg hover:bg-opacity-90 transition duration-200 focus:outline-none focus:ring-2 focus:ring-principale"
           >
             Se connecter
           </button>
         </form>
+        <p className="text-center text-principale text-base">
+          Vous n'avez pas de compte ? <a href="/register" className="text-secondaire-rouge hover:underline">Inscrivez-vous</a>
+        </p>
       </div>
     </div>
   );
+
 }
 
 export default Login;
