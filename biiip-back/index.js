@@ -65,6 +65,6 @@ sequelize.authenticate()
   });
 
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running at http://51.75.143.134:${port}`);
 });

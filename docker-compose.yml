@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: biiip-qr
     ports:
-      - '5174:5173'
+      - '5174:5174'
     volumes:
       - ./biiip-qr:/app
       - /app/node_modules
