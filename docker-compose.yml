@@ -1,4 +1,22 @@
 services:
+  qr:
+    build:
+      context: ./biiip-qr
+      dockerfile: Dockerfile
+    container_name: biiip-qr
+    ports:
+      - '5174:5173'
+    volumes:
+      - ./biiip-qr:/app
+      - /app/node_modules
+    networks:
+      - biiip-network
+    depends_on:
+      - backend
+    command: npm run dev
+    environment:
+      - VITE_BACKEND_URL=http://51.75.143.134:3000
+
   frontend:
     build:
       context: ./biiip-front

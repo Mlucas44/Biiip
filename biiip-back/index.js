@@ -9,6 +9,7 @@ app.use(express.json()); // Pour parser le JSON
 const sequelize = require('./sequelize');
 const errorHandler = require('./middleware/errorHandler');
 const authRouter = require('./routes/auth');
+const paymentRouter = require('./routes/payment');
 
 // Importation des routeurs
 const indexRouter = require('./routes/index');
@@ -18,6 +19,7 @@ const usersRouter = require('./routes/users');
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/payment', paymentRouter);
 
 // Middleware de gestion des erreurs
 app.use(errorHandler);
