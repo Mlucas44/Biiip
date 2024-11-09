@@ -11,6 +11,7 @@ router.post('/create-payment-intent', async (req, res) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: 'eur', // Change la devise si nécessaire
+      payment_method_types: ['card', 'google_pay', 'apple_pay'],
     });
 
     res.json({ clientSecret: paymentIntent.client_secret });
