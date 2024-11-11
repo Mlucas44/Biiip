@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { useStripe, useElements, PaymentElement, PaymentRequestButtonElement } from '@stripe/react-stripe-js';
+import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import axios from '../axiosConfig';
+import Logo from '../../public/images/Logo-Principal.svg'; // Assurez-vous que le chemin est correct
 
-const stripePromise = loadStripe('pk_test_51QIX2OAL8Mb1lB3Ma9DnZSCkpTsLX8C13JLlyzACz4zV0Zshg3yJzEIE0OP84SX0uvsCRxE2vUdddRJf4liuxhD900c92i90E4'); // Remplacez par votre clé publique Stripe
+const stripePromise = loadStripe('pk_test_51QIX2OAL8Mb1lB3Ma9DnZSCkpTsLX8C13JLlyzACz4zV0Zshg3yJzEIE0OP84SX0uvsCRxE2vUdddRJf4liuxhD900c92i90E4');
 
 function CheckoutForm () {
   const [amount, setAmount] = useState(5);
@@ -16,6 +17,10 @@ function CheckoutForm () {
 
   const handleStarClick = (index) => {
     setRating(index + 1);
+  };
+
+  const handleAmountChange = (change) => {
+    setAmount((prevAmount) => Math.max(1, prevAmount + change));
   };
 
   const handlePaymentButtonClick = async () => {
@@ -31,6 +36,12 @@ function CheckoutForm () {
     }
   };
 
+  const handleBackClick = () => {
+    setClientSecret('');
+    setShowPaymentElement(false);
+    setMessage(null);
+  };
+
   const appearance = { theme: 'flat' };
   const options = { clientSecret, appearance };
 
@@ -39,21 +50,38 @@ function CheckoutForm () {
       {!showPaymentElement ? (
         <form className="relative max-w-md w-full p-6 bg-white shadow-lg rounded-lg">
           <div className="flex justify-center mb-4">
-            {/* Vous pouvez insérer votre logo ici */}
+            <img src={Logo} alt="Logo" className="h-12" />
           </div>
           <h3 className="text-2xl font-bold mb-4 text-center text-primary">Offrez un pourboire</h3>
 
           <div className="mb-3">
             <label className="block text-secondary-red text-sm mb-1">Montant du pourboire (€) :</label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              min="1"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-              required
-            />
+            <div className="flex items-center space-x-2">
+              <button
+                type="button"
+                onClick={() => handleAmountChange(-1)}
+                className="px-3 py-1 bg-secondary  rounded-md hover:bg-secondary-dark transition"
+              >
+                -
+              </button>
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(parseInt(e.target.value) || 1)}
+                min="1"
+                className="w-16 text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary text-lg"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => handleAmountChange(1)}
+                className="px-3 py-1 bg-secondary  rounded-md hover:bg-secondary-dark transition"
+              >
+                +
+              </button>
+            </div>
           </div>
+
           <div className="mb-3">
             <label className="block text-secondary-red text-sm mb-1">Laisser un avis :</label>
             <textarea
@@ -64,6 +92,7 @@ function CheckoutForm () {
               placeholder="Votre avis..."
             ></textarea>
           </div>
+
           <div className="mb-3">
             <label className="block text-secondary-red text-sm mb-1">Satisfaction :</label>
             <div className="flex space-x-1">
@@ -72,7 +101,7 @@ function CheckoutForm () {
                   type="button"
                   key={index}
                   onClick={() => handleStarClick(index)}
-                  className={`text-xl ${index < rating ? 'text-accentuation' : 'text-gray-300'} hover:text-accentuation transition-colors`}
+                  className={`text-5xl ${index < rating ? 'text-accentuation' : 'text-gray-300'} hover:text-accentuation transition-colors`}
                 >
                   ★
                 </button>
@@ -80,6 +109,7 @@ function CheckoutForm () {
             </div>
             <p className="mt-1 text-secondary-red text-sm">Note : {rating} étoile(s)</p>
           </div>
+
           <button
             type="button"
             onClick={handlePaymentButtonClick}
@@ -91,7 +121,14 @@ function CheckoutForm () {
       ) : (
         clientSecret && (
           <Elements stripe={stripePromise} options={options}>
-            <PaymentForm amount={amount} message={message} setMessage={setMessage} />
+            <PaymentForm
+              amount={amount}
+              review={review}
+              rating={rating}
+              message={message}
+              setMessage={setMessage}
+              onBack={handleBackClick}
+            />
           </Elements>
         )
       )}
@@ -99,36 +136,9 @@ function CheckoutForm () {
   );
 }
 
-function PaymentForm ({ amount, message, setMessage }) {
+function PaymentForm ({ amount, review, rating, message, setMessage, onBack }) {
   const stripe = useStripe();
   const elements = useElements();
-
-  const [paymentRequest, setPaymentRequest] = useState(null);
-  const [showPaymentRequestButton, setShowPaymentRequestButton] = useState(false);
-
-  React.useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const pr = stripe.paymentRequest({
-      country: 'FR',
-      currency: 'eur',
-      total: {
-        label: 'Total',
-        amount: amount * 100,
-      },
-      requestPayerName: true,
-      requestPayerEmail: true,
-    });
-
-    pr.canMakePayment().then((result) => {
-      if (result) {
-        setPaymentRequest(pr);
-        setShowPaymentRequestButton(true);
-      }
-    });
-  }, [stripe, amount]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -160,14 +170,21 @@ function PaymentForm ({ amount, message, setMessage }) {
 
   return (
     <form onSubmit={handleSubmit} className="relative max-w-md w-full p-6 bg-white shadow-lg rounded-lg">
+      <button
+        type="button"
+        onClick={onBack}
+        className="mb-3 text-primary hover:text-primary-dark"
+      >
+        ← Retour
+      </button>
+      <div className="mb-4">
+        <p className="text-secondary-red text-sm mb-1">Montant : {amount} €</p>
+        {review && <p className="text-secondary-red text-sm mb-1">Avis : {review}</p>}
+        {rating > 0 && <p className="text-secondary-red text-sm mb-1">Note : {rating} étoile(s)</p>}
+      </div>
       <div className="mb-3">
         <label className="block text-secondary-red text-sm mb-1">Informations de paiement :</label>
         <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-primary">
-          {showPaymentRequestButton && paymentRequest && (
-            <div className="mb-4">
-              <PaymentRequestButtonElement options={{ paymentRequest }} />
-            </div>
-          )}
           <PaymentElement />
         </div>
       </div>
