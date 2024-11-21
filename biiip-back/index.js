@@ -17,6 +17,7 @@ const paymentRouter = require('./routes/payment');
 // Importation des routeurs
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const pourboiresRouter = require('./routes/pourboires');
 
 // Redirection HTTP vers HTTPS
 app.use((req, res, next) => {
@@ -32,6 +33,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/payment', paymentRouter);
+app.use('/pourboires', pourboiresRouter);
 
 // Middleware de gestion des erreurs
 app.use(errorHandler);

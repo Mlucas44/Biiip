@@ -1,9 +1,18 @@
-// App.js
+// src/App.js
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CheckoutForm from './components/CheckoutForm';
+import SuccessPage from './components/SuccessPage';
 
 function App () {
-  return <CheckoutForm />;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<CheckoutForm />} />
+        <Route path="/success" element={<SuccessPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

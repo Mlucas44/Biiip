@@ -17,23 +17,23 @@ services:
     environment:
       - VITE_BACKEND_URL=https://biiip.mlucas.store:3000
 
-  frontend:
-    build:
-      context: ./biiip-front
-      dockerfile: Dockerfile
-    container_name: biiip-frontend
-    ports:
-      - '5173:5173'
-    volumes:
-      - ./biiip-front:/app
-      - /app/node_modules
-    networks:
-      - biiip-network
-    depends_on:
-      - backend
-    command: npm run dev
-    environment:
-      - VITE_BACKEND_URL=https://biiip.mlucas.store:3000
+  # frontend:
+  #   build:
+  #     context: ./biiip-front
+  #     dockerfile: Dockerfile
+  #   container_name: biiip-frontend
+  #   ports:
+  #     - '5173:5173'
+  #   volumes:
+  #     - ./biiip-front:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - biiip-network
+  #   depends_on:
+  #     - backend
+  #   command: npm run dev
+  #   environment:
+  #     - VITE_BACKEND_URL=https://biiip.mlucas.store:3000
 
   backend:
     build:

@@ -1,9 +1,10 @@
+// src/components/CheckoutForm.jsx
 import React, { useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import axios from '../axiosConfig';
-import Logo from '../../public/images/Logo-Principal.svg'; // Assurez-vous que le chemin est correct
+import Logo from '../../public/images/Logo-Principal.svg';
+import PaymentForm from './PaymentForm';
 
 const stripePromise = loadStripe('pk_test_51QIX2OAL8Mb1lB3Ma9DnZSCkpTsLX8C13JLlyzACz4zV0Zshg3yJzEIE0OP84SX0uvsCRxE2vUdddRJf4liuxhD900c92i90E4');
 
@@ -29,6 +30,9 @@ function CheckoutForm () {
         amount: amount * 100,
       });
       setClientSecret(response.data.clientSecret);
+      console.log('ClientSecret:', clientSecret);
+      console.log('Envoi de la requête vers Stripe...');
+
       setShowPaymentElement(true);
     } catch (error) {
       console.error('Erreur lors de la création du PaymentIntent :', error);
@@ -117,6 +121,12 @@ function CheckoutForm () {
           >
             Payer
           </button>
+
+          {message && (
+            <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md shadow-sm">
+              {message}
+            </div>
+          )}
         </form>
       ) : (
         clientSecret && (
@@ -133,74 +143,6 @@ function CheckoutForm () {
         )
       )}
     </div>
-  );
-}
-
-function PaymentForm ({ amount, review, rating, message, setMessage, onBack }) {
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    try {
-      const result = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: 'https://your-site.com/success',
-        },
-      });
-
-      if (result.error) {
-        setMessage(result.error.message);
-      } else {
-        if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-          setMessage('Paiement réussi ! Merci pour votre pourboire et votre avis.');
-        }
-      }
-    } catch (error) {
-      console.error('Erreur lors de la confirmation du paiement :', error);
-      setMessage('Une erreur est survenue lors du paiement.');
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="relative max-w-md w-full p-6 bg-white shadow-lg rounded-lg">
-      <button
-        type="button"
-        onClick={onBack}
-        className="mb-3 text-primary hover:text-primary-dark"
-      >
-        ← Retour
-      </button>
-      <div className="mb-4">
-        <p className="text-secondary-red text-sm mb-1">Montant : {amount} €</p>
-        {review && <p className="text-secondary-red text-sm mb-1">Avis : {review}</p>}
-        {rating > 0 && <p className="text-secondary-red text-sm mb-1">Note : {rating} étoile(s)</p>}
-      </div>
-      <div className="mb-3">
-        <label className="block text-secondary-red text-sm mb-1">Informations de paiement :</label>
-        <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-primary">
-          <PaymentElement />
-        </div>
-      </div>
-      <button
-        type="submit"
-        disabled={!stripe}
-        className="w-full bg-primary text-white py-2 px-4 rounded-md font-medium text-sm hover:bg-primary-dark transition-all duration-300 disabled:opacity-50"
-      >
-        Confirmer le paiement
-      </button>
-      {message && (
-        <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-md shadow-sm">
-          {message}
-        </div>
-      )}
-    </form>
   );
 }
 
