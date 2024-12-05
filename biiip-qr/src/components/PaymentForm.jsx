@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
+import axios from '../axiosConfig';
 
 const PaymentForm = ({ amount, review, rating, message, setMessage, onBack }) => {
   const stripe = useStripe();
@@ -23,16 +24,31 @@ const PaymentForm = ({ amount, review, rating, message, setMessage, onBack }) =>
         elements,
         confirmParams: {
           // Assurez-vous que cette URL correspond à votre route de succès
-          return_url: `${window.location.origin}/success`,
+
+          // return_url: `${window.location.origin}/success`,
+
         },
+        redirect: 'if_required',
       });
 
       if (result.error) {
         setMessage(result.error.message);
       } else {
         if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-          // Redirection manuelle si le paiement est réussi
-          navigate('/success');
+          try {
+            // Envoi des données du pourboire au backend
+            await axios.post('/pourboires', {
+              amount,
+              rating,
+              review,
+            });
+
+            // Redirection vers la page de succès
+            navigate('/success');
+          } catch (error) {
+            console.error('Erreur lors de l\'enregistrement du pourboire :', error);
+            setMessage('Le paiement a été effectué, mais une erreur est survenue lors de l\'enregistrement du pourboire.');
+          }
         }
       }
     } catch (error) {
