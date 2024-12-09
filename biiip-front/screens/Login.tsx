@@ -1,12 +1,13 @@
 // Login.js
 import React, { useState, useEffect } from 'react';
 import {
-  Text, TextInput, Button, TouchableOpacity, View
+  Text, TextInput, TouchableOpacity, View
 } from 'react-native';
 import axios from '../axiosConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Logo from '../assets/Logo.svg';
+import { Button } from '../components/Button';
 
 type RootStackParamList = {
   Login: undefined;
@@ -74,7 +75,7 @@ function Login() {
       ) : null}
       <Button title="Se connecter" onPress={handleSubmit} />
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text className="text-center text-blue-500 mt-4">
+        <Text className="text-center  text-brand-red-500 mt-4">
           Vous n'avez pas de compte ? Inscrivez-vous
         </Text>
       </TouchableOpacity>

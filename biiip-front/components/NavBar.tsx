@@ -11,7 +11,7 @@ function NavBar() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
-    <View className="absolute bottom-0 left-0 right-0 bg-principale p-2 flex-row justify-around">
+    <View className="absolute bottom-0 left-0 right-0 bg-brand-darkBlue-700 p-2 flex-row justify-around">
       <TouchableOpacity
         onPress={() => navigation.navigate('Dashboard')}
         className="flex flex-col items-center"
