@@ -64,17 +64,17 @@ const PaymentForm = ({ amount, review, rating, message, setMessage, onBack }) =>
       <button
         type="button"
         onClick={onBack}
-        className="mb-3 text-primary hover:text-primary-dark"
+        className="mb-3 text-primary font-medium hover:text-primary-dark"
       >
         ← Retour
       </button>
       <div className="mb-4">
-        <p className="text-secondary-red text-sm mb-1">Montant : {amount} €</p>
-        {review && <p className="text-secondary-red text-sm mb-1">Avis : {review}</p>}
-        {rating > 0 && <p className="text-secondary-red text-sm mb-1">Note : {rating} étoile(s)</p>}
+        <p className="text-primary text-sm font-medium mb-1">Montant : {amount} €</p>
+        {review && <p className="text-primary text-sm font-medium mb-1">Avis : {review}</p>}
+        {rating > 0 && <p className="text-primary text-sm font-medium mb-1">Note : {rating} étoile(s)</p>}
       </div>
       <div className="mb-3">
-        <label className="block text-secondary-red text-sm mb-1">Informations de paiement :</label>
+      <label className="block text-primary text-md font-medium mb-2">Informations de paiement :</label>
         <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-primary">
           <PaymentElement />
         </div>
@@ -82,7 +82,7 @@ const PaymentForm = ({ amount, review, rating, message, setMessage, onBack }) =>
       <button
         type="submit"
         disabled={!stripe || isLoading}
-        className={`w-full bg-primary text-white py-2 px-4 rounded-md font-medium text-sm hover:bg-primary-dark transition-all duration-300 disabled:opacity-50 ${isLoading ? 'cursor-not-allowed' : ''
+        className={`w-full bg-primary text-white text-lg py-3 px-4 rounded-3xl font-medium text-sm hover:bg-primary-dark transition-all duration-300 disabled:opacity-50 ${isLoading ? 'cursor-not-allowed' : ''
           }`}
       >
         {isLoading ? 'Traitement...' : 'Confirmer le paiement'}
