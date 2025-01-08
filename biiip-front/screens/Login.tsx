@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Logo from '../assets/Logo.svg';
 import { Button } from '../components/Button';
+import CustomButton from '../components/button/CustomButton';
 
 type RootStackParamList = {
   Login: undefined;
@@ -73,7 +74,11 @@ function Login() {
           {errorMessage}
         </Text>
       ) : null}
-      <Button title="Se connecter" onPress={handleSubmit} />
+      <CustomButton
+        title="Se connecter"
+        onPress={handleSubmit}
+        variant="primary"
+      />
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text className="text-center  text-brand-red-500 mt-4">
           Vous n'avez pas de compte ? Inscrivez-vous
