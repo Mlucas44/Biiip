@@ -4,13 +4,15 @@ import {
   View,
   Text,
   TouchableOpacity,
-  FlatList,
+  ScrollView,
   ActivityIndicator,
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Layout from '../components/Layout';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import LogoutButton from '../components/LogoutButton';
+import AccueilBanner from '../components/AccueilBanner';
+import TransactionHistory from '../components/TransactionHistory';
+import BarChart from '../components/BarChart';
 import axios from '../axiosConfig';
 
 type RootStackParamList = {
@@ -116,66 +118,29 @@ function Dashboard() {
       </Layout>
     );
   }
+  const data = [
+    { x: "Juil", y: 50 },
+    { x: "Août", y: 80 },
+    { x: "Sept", y: 60 },
+    { x: "Oct", y: 40 },
+    { x: "Nov", y: 70 },
+    { x: "Déc", y: 90 },
+  ];
 
   return (
     <Layout>
-      {/* Header interne personnalisé */}
-      <View className="flex-row justify-between items-center mb-6">
-        <Text className="text-2xl font-bold text-principale">Bienvenue Sandrine</Text>
-        <TouchableOpacity className="p-2 bg-principale rounded-full">
-          <Text style={{ color: 'white' }}>🔔</Text>
-        </TouchableOpacity>
-      </View>
+      {/* Ajout d’un ScrollView pour permettre le défilement */}
+      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 20 }}>
+        <AccueilBanner transactions={transactions} />
 
-      {/* Balance card */}
-      <View className="bg-white p-6 rounded-lg shadow mb-6">
-        <Text className="text-xl font-semibold text-principale">
-          {transactions.reduce((total, item) => total + item.amount, 0).toFixed(2)} €
-        </Text>
-        <Text className="text-sm text-gray-500">Depuis {new Date().getFullYear()}</Text>
-        <LogoutButton />
-      </View>
+        <TransactionHistory transactions={transactions} />
 
-      {/* Transaction history */}
-      <View className="mb-2">
-        <Text className="text-lg font-medium text-principale">Historique de transaction</Text>
-        <View
-          className="mt-4 bg-fond rounded-lg"
-          style={{ maxHeight: 200 }}
-        >
-          <FlatList
-            data={transactions.slice(0, visibleTransactions)}
-            renderItem={renderTransaction}
-            keyExtractor={(item) => item.id.toString()}
-            onEndReached={loadMoreTransactions}
-            onEndReachedThreshold={0.5}
-            scrollEnabled
-          />
-        </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Historique')}
-          className="mt-4 w-full bg-principale px-4 py-2 rounded"
-        >
-          <Text className="text-white text-center">Explorer l'historique</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Graphique */}
+        <BarChart />
 
-      {/* Chart section */}
-      <View className="mt-2">
-        <Text className="text-lg font-medium text-principale">Tous vos pourboires</Text>
-        <View className="bg-white p-6 rounded-lg shadow">
-          {/* Placeholder for the chart */}
-          <View className="h-32 bg-gray-200 rounded mb-4" />
-          <TouchableOpacity
-            className="w-full bg-principale px-4 py-2 rounded"
-            onPress={() => { /* Action pour voir les statistiques */ }}
-          >
-            <Text className="text-white text-center">Voir mes statistiques de pourboire</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ScrollView>
     </Layout>
-  );
+  )
 }
 
 export default Dashboard;

@@ -27,7 +27,7 @@ export const Button = ({
   // Ajustement du padding si présence d’une icône
   if (withIcon && !disabled) {
     // Remplace px-12 par pl-12 pr-8
-    baseClasses = baseClasses.replace("px-12", "pl-12 pr-8");
+    baseClasses = baseClasses.replace("px-16", "pl-12 pr-8");
   }
 
   return (
@@ -41,7 +41,7 @@ export const Button = ({
       onHoverIn={() => setIsHovered(true)}
       onHoverOut={() => setIsHovered(false)}
     >
-      <Text className="text-neutrals-blackWhite-White text-base font-medium font-['Inter'] leading-normal">
+      <Text className="text-neutrals-blackWhite-White text-base font-medium font-['Gabarito'] leading-normal">
         {title}
       </Text>
       {withIcon && (

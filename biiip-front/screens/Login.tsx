@@ -7,7 +7,6 @@ import axios from '../axiosConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Logo from '../assets/Logo.svg';
-import { Button } from '../components/Button';
 import CustomButton from '../components/button/CustomButton';
 
 type RootStackParamList = {

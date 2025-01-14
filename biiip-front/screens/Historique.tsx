@@ -88,6 +88,29 @@ function Historique() {
     return ratingMatch && startDateMatch && endDateMatch;
   });
 
+  // -----------------------------
+  // AJOUT ICI : deux sous-tableaux
+  // -----------------------------
+  const now = new Date();
+
+  // 7 derniers jours
+  const last7Days = new Date(now);
+  last7Days.setDate(last7Days.getDate() - 7);
+  const transactions7Days = filteredTransactions.filter((item) => {
+    const dateItem = new Date(item.createdAt);
+    return dateItem >= last7Days && dateItem <= now;
+  });
+
+  // Mois en cours (du 1er au jour actuel)
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const transactionsMonth = filteredTransactions.filter((item) => {
+    const dateItem = new Date(item.createdAt);
+    return dateItem >= startOfMonth && dateItem <= now;
+  });
+  // -----------------------------
+  // FIN AJOUT
+  // -----------------------------
+
   // Fonction pour ouvrir le menu de filtre
   const openFilterMenu = () => {
     setIsFilterVisible(true);
@@ -207,15 +230,34 @@ function Historique() {
         </View>
       )}
 
-      {/* Liste complète des transactions filtrées */}
+      {/* ----------------------------------------- */}
+      {/* Liste n°1 : Pourboires des 7 derniers jours */}
+      {/* ----------------------------------------- */}
+      <Text className="text-xl font-bold mt-4">Historique des 7 derniers jours</Text>
       <FlatList
-        data={filteredTransactions}
+        data={transactions7Days}
+        renderItem={renderTransaction}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 20 }}
+        ListEmptyComponent={
+          <Text className="text-center text-gray-500 mt-4">
+            Aucun pourboire trouvé pour les 7 derniers jours.
+          </Text>
+        }
+      />
+
+      {/* -------------------------------------- */}
+      {/* Liste n°2 : Pourboires du mois en cours */}
+      {/* -------------------------------------- */}
+      <Text className="text-xl font-bold mt-4">Historique du mois</Text>
+      <FlatList
+        data={transactionsMonth}
         renderItem={renderTransaction}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 80 }}
         ListEmptyComponent={
           <Text className="text-center text-gray-500 mt-4">
-            Aucun pourboire trouvé pour ces filtres.
+            Aucun pourboire trouvé pour ce mois.
           </Text>
         }
       />

@@ -44,7 +44,7 @@ const TabBar: React.FC = () => {
             <View style={{ height: 40, width: 60, alignItems: 'center', justifyContent: 'center' }}>
               {activeTab === tab && (
                 <View className="absolute -top-10 items-center justify-center">
-                  <View className="absolute bottom-[-11px] w-[80px] h-[46px] bg-neutrals-grey-50 rounded-bl-[60px] rounded-br-[60px]" />
+                  <View className="absolute bottom-[-10px] w-[80px] h-[46px] bg-neutrals-grey-50 rounded-bl-[60px] rounded-br-[60px]" />
                   <View className="w-16 h-16 bg-brand-darkBlue-500-main rounded-full flex items-center justify-center">
                     {renderTabIcon(tab as Tab)}
                   </View>
