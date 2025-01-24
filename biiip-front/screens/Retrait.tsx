@@ -26,7 +26,7 @@ type Transaction = {
 function Retrait() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const handleSubmit = async () => {
-    navigation.navigate('Dashboard');
+    navigation.navigate('Accueil');
   };
   return (
     <Layout>

@@ -7,7 +7,7 @@ import {
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Layout from '../components/Layout';
 import axios from '../axiosConfig';
-import AccountsTransaction from '../components/AccountsTransaction';
+import CompteTransaction from '../components/CompteTransaction';
 import FormRetrait from '../components/FormRetrait';
 
 type RootStackParamList = {
@@ -72,7 +72,7 @@ function Historique() {
         <Text className="text-3xl font-bold text-gray-900 mt-8 ml-6">Compte</Text>
 
         {/* Transactions */}
-        <AccountsTransaction transactions={transactions} />
+        <CompteTransaction transactions={transactions} />
 
         {/* Formulaire de retrait */}
         <FormRetrait />

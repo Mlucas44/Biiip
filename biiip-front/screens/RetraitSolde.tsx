@@ -18,7 +18,7 @@ type RootStackParamList = {
 function RetraitSolde() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const handleSubmit = async () => {
-    navigation.navigate('Dashboard');
+    navigation.navigate('Accueil');
   };
 
   return (

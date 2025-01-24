@@ -1,4 +1,4 @@
-// components/Dashboard.js
+// components/Accueil.js
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -27,7 +27,7 @@ type Transaction = {
   createdAt: string;
 };
 
-function Dashboard() {
+function Accueil() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   // État pour les transactions, le chargement et les erreurs
@@ -93,4 +93,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard;
+export default Accueil;

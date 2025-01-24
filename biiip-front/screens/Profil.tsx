@@ -10,7 +10,7 @@ import Layout from '../components/Layout';
 import LogoutButton from '../components/LogoutButton';
 import CustomButton from '../components/button/CustomButton';
 
-function Profile() {
+function Profil() {
   return (
     <Layout>
       {/* Rendre la page scrollable */}
@@ -86,4 +86,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Profil;

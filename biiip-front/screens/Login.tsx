@@ -11,7 +11,7 @@ import CustomButton from '../components/button/CustomButton';
 
 type RootStackParamList = {
   Login: undefined;
-  Dashboard: undefined;
+  Accueil: undefined;
   Register: undefined;
 };
 
@@ -27,7 +27,7 @@ function Login() {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('token');
       if (token) {
-        navigation.navigate('Dashboard');
+        navigation.navigate('Accueil');
       }
     };
     checkToken();
@@ -40,7 +40,8 @@ function Login() {
         password,
       });
       await AsyncStorage.setItem('token', response.data.token);
-      navigation.navigate('Dashboard');
+      // await AsyncStorage.setItem('role', JSON.stringify(response.data.role));
+      navigation.navigate('Accueil');
     } catch (error) {
       console.error('Erreur lors de la connexion :', error);
       setErrorMessage('Email ou mot de passe incorrect.');

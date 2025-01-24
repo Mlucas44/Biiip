@@ -8,9 +8,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Login from './screens/Login';
-import Dashboard from './screens/Dashboard';
-import Accounts from './screens/Accounts';
-import Profile from './screens/Profile';
+import Accueil from './screens/Accueil';
+import Compte from './screens/Compte';
+import Profil from './screens/Profil';
 import Historique from './screens/Historique';
 import Statistiques from './screens/Statistiques';
 import Retrait from './screens/Retrait';
@@ -25,7 +25,7 @@ function App() {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem('token');
       if (token) {
-        setInitialRoute('Dashboard');
+        setInitialRoute('Accueil');
       }
     };
     checkToken();
@@ -41,19 +41,19 @@ function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Dashboard"
-            component={Dashboard}
+            name="Accueil"
+            component={Accueil}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Accounts"
-            component={Accounts}
+            name="Compte"
+            component={Compte}
             options={{ headerShown: false }}
           />
 
           <Stack.Screen
-            name="Profile"
-            component={Profile}
+            name="Profil"
+            component={Profil}
             options={{ headerShown: false }}
           />
           <Stack.Screen

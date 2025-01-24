@@ -20,7 +20,7 @@ type TransactionHistoryProps = {
 
 
 
-function AccountsTransaction({
+function CompteTransaction({
   transactions,
   onPressSeeMore,
 }: TransactionHistoryProps) {
@@ -107,4 +107,4 @@ function AccountsTransaction({
   );
 }
 
-export default AccountsTransaction;
+export default CompteTransaction;

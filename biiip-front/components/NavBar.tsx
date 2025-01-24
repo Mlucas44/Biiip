@@ -3,10 +3,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-type Tab = 'Dashboard' | 'Accounts' | 'Profile';
+type Tab = 'Accueil' | 'Compte' | 'Profil';
 
 const TabBar: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('Dashboard');
+  const [activeTab, setActiveTab] = useState<Tab>('Accueil');
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -21,11 +21,11 @@ const TabBar: React.FC = () => {
 
   const renderTabIcon = (tab: Tab) => {
     switch (tab) {
-      case 'Dashboard':
+      case 'Accueil':
         return <Icon name="home" size={24} color="white" />;
-      case 'Accounts':
+      case 'Compte':
         return <Icon name="account-balance-wallet" size={24} color="white" />;
-      case 'Profile':
+      case 'Profil':
         return <Icon name="person" size={24} color="white" />;
       default:
         return null;
@@ -34,7 +34,7 @@ const TabBar: React.FC = () => {
 
   return (
     <View className="absolute bottom-0 left-0 right-0 bg-brand-darkBlue-500-main flex-row justify-around py-4 rounded-t-3xl">
-      {['Dashboard', 'Accounts', 'Profile'].map((tab) => (
+      {['Accueil', 'Compte', 'Profil'].map((tab) => (
         <TouchableOpacity
           key={tab}
           onPress={() => handleTabPress(tab as Tab)}
