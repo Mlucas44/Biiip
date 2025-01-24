@@ -17,7 +17,7 @@ function LogoutButton() {
   return (
     <TouchableOpacity
       onPress={handleLogout}
-      className="py-2 px-4 mt-3 bg-red-600 rounded"
+      className="py-2 px-4 mt-3 rounded"
     >
       <Text className="text-white text-center">Se déconnecter</Text>
     </TouchableOpacity>

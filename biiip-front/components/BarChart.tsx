@@ -1,10 +1,12 @@
 import { View, Text, Dimensions } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import CustomButton from '../components/button/CustomButton';
+import { useNavigation } from '@react-navigation/native';
 
 const screenWidth = Dimensions.get("window").width;
 
 export default function MyBarChart() {
+  const navigation = useNavigation();
 
   const data = {
     labels: ["Juil", "Août", "Sept", "Oct", "Nov"],
@@ -25,7 +27,9 @@ export default function MyBarChart() {
     },
 
   };
-
+  const handleSubmit = async () => {
+    navigation.navigate('Statistiques');
+  };
 
   return (
     <View className=" bg-white rounded-xl p-4 ml-5 mr-5 mt-8 mb-64"  >
@@ -46,7 +50,7 @@ export default function MyBarChart() {
       <View className="mt-4">
         <CustomButton
           title="Voir mes statistiques de pourboire"
-          // onPress={handleSubmit}
+          onPress={handleSubmit}
           variant="primary"
         />
       </View>

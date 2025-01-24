@@ -72,7 +72,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 
   return (
     <TouchableOpacity
-      className={`${containerClass} flex-row items-center justify-center py-2 px-12 rounded-3xl ${className}`}
+      className={`${containerClass} flex-row items-center justify-center py-4 px-12 rounded-3xl ${className}`}
       onPress={onPress}
       disabled={disabled || loading}
       activeOpacity={0.7}

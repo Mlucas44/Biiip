@@ -2,8 +2,13 @@ import React from "react";
 import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 // import FondAccueil from "../assets/fond-accueil.svg"; // Chemin vers ton fichier SVG
 import FondAccueil from "../assets/fond-accueil.svg"; // Chemin vers ton fichier SVG
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+type RootStackParamList = {
+  Historique: undefined;
+};
 
 const AccueilBanner: React.FC<{ transactions?: { amount: number }[] }> = ({ transactions = [] }) => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { height } = Dimensions.get("window"); // Récupère la hauteur de l'écran
 
   return (
@@ -25,7 +30,9 @@ const AccueilBanner: React.FC<{ transactions?: { amount: number }[] }> = ({ tran
         <Text className="text-white text-3xl font-bold mt-1">
           {transactions.reduce((total, item) => total + item.amount, 0).toFixed(2)} €
         </Text>
-        <TouchableOpacity className="mt-4 bg-white px-6 py-2 rounded-lg shadow-md">
+        <TouchableOpacity className="mt-4 bg-white px-6 py-2 rounded-lg shadow-md"
+          onPress={() => navigation.navigate('RetraitSolde')}
+        >
           <Text className="text-[#1F2B53] font-bold">Retirer</Text>
         </TouchableOpacity>
       </View>

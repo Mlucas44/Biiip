@@ -11,7 +11,10 @@ import Login from './screens/Login';
 import Dashboard from './screens/Dashboard';
 import Accounts from './screens/Accounts';
 import Profile from './screens/Profile';
-import Historique from './screens/Historique'; // Import de Historique
+import Historique from './screens/Historique';
+import Statistiques from './screens/Statistiques';
+import Retrait from './screens/Retrait';
+import RetraitSolde from './screens/RetraitSolde';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +59,21 @@ function App() {
           <Stack.Screen
             name="Historique"
             component={Historique}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Statistiques"
+            component={Statistiques}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Retrait"
+            component={Retrait}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="RetraitSolde"
+            component={RetraitSolde}
             options={{ headerShown: false }}
           />
           {/* Ajoutez d'autres écrans ici si nécessaire */}
