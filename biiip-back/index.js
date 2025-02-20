@@ -61,6 +61,48 @@ const createDefaultUser = async () => {
   }
 };
 
+const createDefaultPourboires = async () => {
+  const Pourboire = require('./models/Pourboire'); // vérifie le chemin
+  try {
+    // On vérifie s'il y a déjà des pourboires
+    const existingPourboiresCount = await Pourboire.count();
+
+    if (existingPourboiresCount === 0) {
+      // Si aucun pourboire n'existe, on insère nos 20 pourboires
+      const pourboiresData = [
+        { amount: 2.50, rating: 5, review: 'Service impeccable, merci !' },
+        { amount: 3.00, rating: 4, review: 'Rapide et efficace' },
+        { amount: 4.25, rating: 5, review: 'Très sympa, top accueil' },
+        { amount: 1.50, rating: 3, review: 'OK, mais peut mieux faire' },
+        { amount: 2.75, rating: 4, review: 'Bon service' },
+        { amount: 5.00, rating: 5, review: 'Exceptionnel, je recommande !' },
+        { amount: 3.50, rating: 4, review: 'Sympathique et professionnel' },
+        { amount: 2.00, rating: 3, review: 'Accueil correct' },
+        { amount: 1.00, rating: 2, review: 'Un peu déçu par l\'attente' },
+        { amount: 4.00, rating: 5, review: 'Rien à dire, parfait !' },
+        { amount: 2.20, rating: 3, review: 'Ça passe, sans plus' },
+        { amount: 3.75, rating: 4, review: 'Bonne réactivité' },
+        { amount: 4.50, rating: 5, review: 'Super équipe, merci encore' },
+        { amount: 2.10, rating: 3, review: 'Peut mieux faire, mais correct' },
+        { amount: 1.75, rating: 2, review: 'Service lent' },
+        { amount: 2.45, rating: 4, review: 'Au top' },
+        { amount: 3.00, rating: 3, review: 'Service assez bon, sans plus' },
+        { amount: 3.10, rating: 4, review: 'Aimable et serviable' },
+        { amount: 4.80, rating: 5, review: 'Incroyable expérience' },
+        { amount: 2.50, rating: 3, review: 'Moyen, mais fait le job' },
+      ];
+
+      await Pourboire.bulkCreate(pourboiresData);
+      console.log('Les 20 pourboires par défaut ont été créés avec succès !');
+    } else {
+      console.log('Des pourboires existent déjà en base, aucune insertion n\'a été faite.');
+    }
+  } catch (error) {
+    console.error('Erreur lors de la création des pourboires par défaut :', error);
+  }
+};
+
+
 // Tester la connexion à la base de données
 sequelize.authenticate()
   .then(() => {
@@ -68,6 +110,7 @@ sequelize.authenticate()
     return sequelize.sync();
   })
   .then(() => {
+    createDefaultPourboires();
     createDefaultUser();
     console.log('Les modèles ont été synchronisés avec la base de données');
   })
