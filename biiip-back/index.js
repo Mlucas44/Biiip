@@ -20,13 +20,13 @@ const usersRouter = require('./routes/users');
 const pourboiresRouter = require('./routes/pourboires');
 
 // Redirection HTTP vers HTTPS
-app.use((req, res, next) => {
-  if (req.secure) {
-    next();
-  } else {
-    res.redirect(`https://${req.headers.host}${req.url}`);
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.secure) {
+//     next();
+//   } else {
+//     res.redirect(`https://${req.headers.host}${req.url}`);
+//   }
+// });
 
 // Utilisation des routeurs
 app.use('/', indexRouter);
