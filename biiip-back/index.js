@@ -125,6 +125,6 @@ const httpsOptions = {
 
 // Créer le serveur HTTPS
 https.createServer(httpsOptions, app).listen(port, '0.0.0.0', () => {
-  console.log(`Server is running at https://biiip.mlucas.store:${port}`);
+  console.log(`Server is running at https://biiip.back.mlucas.store`);
 });
 

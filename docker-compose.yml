@@ -15,7 +15,7 @@ services:
       - backend
     command: npm run dev
     environment:
-      - VITE_BACKEND_URL=https://biiip.mlucas.store:3000
+      - VITE_BACKEND_URL=https://biiip.back.mlucas.store
 
   # frontend:
   #   build:

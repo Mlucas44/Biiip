@@ -35,18 +35,26 @@ function Login() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/auth/login', {
-        email,
-        password,
-      });
+      const response = await axios.post('/auth/login', { email, password });
       await AsyncStorage.setItem('token', response.data.token);
-      // await AsyncStorage.setItem('role', JSON.stringify(response.data.role));
       navigation.navigate('Accueil');
     } catch (error) {
-      console.error('Erreur lors de la connexion :', error);
+      // Log détaillé
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('Request object:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
+      // Message d’erreur à l’écran
       setErrorMessage('Email ou mot de passe incorrect.');
     }
+
   };
+
 
   return (
     <View className="flex-1 p-4 bg-gray-100 justify-center">
