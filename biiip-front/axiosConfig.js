@@ -6,6 +6,7 @@ import { VITE_BACKEND_URL } from '@env';
 const instance = axios.create({
   baseURL: VITE_BACKEND_URL,
 });
+console.log("Base URL =>", process.env.VITE_BACKEND_URL);
 
 // Intercepteur de requête
 instance.interceptors.request.use(

@@ -1,5 +1,3 @@
-const fs = require('fs');
-const https = require('https');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -19,14 +17,6 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const pourboiresRouter = require('./routes/pourboires');
 
-// Redirection HTTP vers HTTPS
-// app.use((req, res, next) => {
-//   if (req.secure) {
-//     next();
-//   } else {
-//     res.redirect(`https://${req.headers.host}${req.url}`);
-//   }
-// });
 
 // Utilisation des routeurs
 app.use('/', indexRouter);
@@ -117,16 +107,6 @@ sequelize.authenticate()
   .catch((err) => {
     console.error('Erreur lors de la connexion ou de la synchronisation :', err);
   });
-
-// const httpsOptions = {
-//   key: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/privkey.pem'),
-//   cert: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/fullchain.pem')
-// };
-
-// // Créer le serveur HTTPS
-// https.createServer(httpsOptions, app).listen(port, '0.0.0.0', () => {
-//   console.log(`Server is running at https://biiip.back.mlucas.store`);
-// });
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`HTTP server listening on port ${port}`);
