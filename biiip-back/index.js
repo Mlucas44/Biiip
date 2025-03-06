@@ -119,8 +119,8 @@ sequelize.authenticate()
   });
 
 const httpsOptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/biiip.mlucas.store/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/biiip.mlucas.store/fullchain.pem')
+  key: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/fullchain.pem')
 };
 
 // Créer le serveur HTTPS
