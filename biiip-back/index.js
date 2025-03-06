@@ -118,13 +118,16 @@ sequelize.authenticate()
     console.error('Erreur lors de la connexion ou de la synchronisation :', err);
   });
 
-const httpsOptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/fullchain.pem')
-};
+// const httpsOptions = {
+//   key: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/biiip.back.mlucas.store/fullchain.pem')
+// };
 
-// Créer le serveur HTTPS
-https.createServer(httpsOptions, app).listen(port, '0.0.0.0', () => {
-  console.log(`Server is running at https://biiip.back.mlucas.store`);
+// // Créer le serveur HTTPS
+// https.createServer(httpsOptions, app).listen(port, '0.0.0.0', () => {
+//   console.log(`Server is running at https://biiip.back.mlucas.store`);
+// });
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`HTTP server listening on port ${port}`);
 });
-
