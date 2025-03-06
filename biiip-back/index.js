@@ -51,7 +51,7 @@ const createDefaultUser = async () => {
         name: defaultUserEmail,
         email: defaultUserPassword,
         password: defaultUserName,
-        role: 1,
+        role: 0,
       });
       console.log('Utilisateur par défaut créé avec succès.');
     } else {
