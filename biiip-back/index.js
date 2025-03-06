@@ -35,12 +35,23 @@ const createDefaultUser = async () => {
     const defaultPassword = process.env.DEFAULT_USER_PASSWORD;
     const defaultName = process.env.DEFAULT_USER_NAME;
 
+    const defaultUserEmail = process.env.DEFAULT_USER_SALARIE_EMAIL;
+    const defaultUserPassword = process.env.DEFAULT_USER_SALARIE_PASSWORD;
+    const defaultUserName = process.env.DEFAULT_USER_SALARIE_NAME;
+
     const user = await User.findOne({ where: { email: defaultEmail } });
     if (!user) {
       await User.create({
         name: defaultName,
         email: defaultEmail,
         password: defaultPassword,
+        role: 1,
+      });
+      await User.create({
+        name: defaultUserEmail,
+        email: defaultUserPassword,
+        password: defaultUserName,
+        role: 1,
       });
       console.log('Utilisateur par défaut créé avec succès.');
     } else {
