@@ -36,7 +36,17 @@ function Login() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post('/auth/login', { email, password });
-      await AsyncStorage.setItem('token', response.data.token);
+
+      // Récupère le token et le user
+      const { token, user } = response.data;
+
+      // Stocke le token
+      await AsyncStorage.setItem('token', token);
+
+      // Stocke aussi le nom (ou l'objet user en entier)
+      await AsyncStorage.setItem('userName', user.name);
+      await AsyncStorage.setItem('role', user.role.toString());
+
       navigation.navigate('Accueil');
     } catch (error) {
       // Log détaillé
@@ -52,7 +62,6 @@ function Login() {
       // Message d’erreur à l’écran
       setErrorMessage('Email ou mot de passe incorrect.');
     }
-
   };
 
 
