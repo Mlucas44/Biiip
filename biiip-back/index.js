@@ -48,9 +48,9 @@ const createDefaultUser = async () => {
         role: 1,
       });
       await User.create({
-        name: defaultUserEmail,
-        email: defaultUserPassword,
-        password: defaultUserName,
+        name: defaultUserName,
+        email: defaultUserEmail,
+        password: defaultUserPassword,
         role: 0,
       });
       console.log('Utilisateur par défaut créé avec succès.');
