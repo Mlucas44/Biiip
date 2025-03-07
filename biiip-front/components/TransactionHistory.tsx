@@ -37,65 +37,66 @@ function TransactionHistory({
         Historique des transactions
       </Text>
 
-      {transactions.slice(0, 3).map((item, index) => {
-        // Tronquer le review si besoin
-        const truncatedReview =
-          item.review && item.review.length > 30
-            ? `${item.review.slice(0, 30)}...`
-            : item.review;
+      {transactions.reverse()
+        .slice(0, 3).map((item, index) => {
+          // Tronquer le review si besoin
+          const truncatedReview =
+            item.review && item.review.length > 30
+              ? `${item.review.slice(0, 30)}...`
+              : item.review;
 
-        // Formater la date en français
-        const formattedDateTime = new Date(item.createdAt).toLocaleString(
-          'fr-FR',
-          {
-            day: '2-digit',
-            month: 'short', // ou 'long'
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          }
-        );
+          // Formater la date en français
+          const formattedDateTime = new Date(item.createdAt).toLocaleString(
+            'fr-FR',
+            {
+              day: '2-digit',
+              month: 'short', // ou 'long'
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            }
+          );
 
-        // Générer les 5 étoiles
-        const stars = Array.from({ length: 5 }, (_, starIndex) => (
-          <Icon
-            key={starIndex}
-            name={starIndex < item.rating ? 'star' : 'star-border'}
-            size={20}
-            color="#FFD700"
-          />
-        ));
+          // Générer les 5 étoiles
+          const stars = Array.from({ length: 5 }, (_, starIndex) => (
+            <Icon
+              key={starIndex}
+              name={starIndex < item.rating ? 'star' : 'star-border'}
+              size={20}
+              color="#FFD700"
+            />
+          ));
 
-        return (
-          <View
-            key={item.id}
-            className={`
+          return (
+            <View
+              key={item.id}
+              className={`
               flex-row justify-between items-center 
               pl-1 pr-1 pb-2 pt-2 rounded-lg   
               ${index < transactions.length - 1 ? 'border-b border-gray-200' : ''}
             `}
-          >
-            <View>
-              {/* Montant + review éventuelle */}
-              <Text className="text-base font-semibold">
+            >
+              <View>
+                {/* Montant + review éventuelle */}
+                <Text className="text-base font-semibold">
 
-                {truncatedReview ? `${truncatedReview}` : ''}
-              </Text>
-              {/* Date de la transaction */}
-              <Text className="text-xs text-gray-400">{formattedDateTime}</Text>
-            </View>
-            {/* Zone étoilée */}
-            <View className="flex-row ">
-              <Text className="text-base font-semibold">
-                {item.amount >= 0
-                  ? `+${item.amount} €`
-                  : `-${Math.abs(item.amount)} €`}
-              </Text>
+                  {truncatedReview ? `${truncatedReview}` : ''}
+                </Text>
+                {/* Date de la transaction */}
+                <Text className="text-xs text-gray-400">{formattedDateTime}</Text>
+              </View>
+              {/* Zone étoilée */}
+              <View className="flex-row ">
+                <Text className="text-base font-semibold">
+                  {item.amount >= 0
+                    ? `+${item.amount} €`
+                    : `-${Math.abs(item.amount)} €`}
+                </Text>
 
+              </View>
             </View>
-          </View>
-        );
-      })}
+          );
+        })}
       <View className="mt-4">
         <CustomButton
           title="Voir mes transactions"

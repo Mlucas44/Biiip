@@ -15,6 +15,8 @@ import Historique from './screens/Historique';
 import Statistiques from './screens/Statistiques';
 import Retrait from './screens/Retrait';
 import RetraitSolde from './screens/RetraitSolde';
+import Biiip from './screens/Biiip';
+import Boitier from './screens/Boitier';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,7 +52,16 @@ function App() {
             component={Compte}
             options={{ headerShown: false }}
           />
-
+          <Stack.Screen
+            name="Biiip"
+            component={Biiip}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Boitier"
+            component={Boitier}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name="Profil"
             component={Profil}

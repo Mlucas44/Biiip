@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomButton from '../components/button/CustomButton';
 
 function LogoutButton() {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ function LogoutButton() {
       onPress={handleLogout}
       className="py-2 px-4 mt-3 rounded"
     >
-      <Text className="text-white text-center">Se déconnecter</Text>
+      <Text className="text-black text-center">Se déconnecter</Text>
     </TouchableOpacity>
   );
 }

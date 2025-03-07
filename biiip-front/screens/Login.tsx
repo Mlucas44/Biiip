@@ -18,7 +18,6 @@ type RootStackParamList = {
 function Login() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  // const navigation = useNavigation();
   const [email, setEmail] = useState('admin@example.com');
   const [password, setPassword] = useState('password123');
   const [errorMessage, setErrorMessage] = useState('');
@@ -40,16 +39,13 @@ function Login() {
       // Récupère le token et le user
       const { token, user } = response.data;
 
-      // Stocke le token
+      // Stocke le token et les infos user
       await AsyncStorage.setItem('token', token);
-
-      // Stocke aussi le nom (ou l'objet user en entier)
       await AsyncStorage.setItem('userName', user.name);
       await AsyncStorage.setItem('role', user.role.toString());
 
       navigation.navigate('Accueil');
     } catch (error) {
-      // Log détaillé
       if (error.response) {
         console.error('Response data:', error.response.data);
         console.error('Response status:', error.response.status);
@@ -59,11 +55,22 @@ function Login() {
       } else {
         console.error('Error message:', error.message);
       }
-      // Message d’erreur à l’écran
       setErrorMessage('Email ou mot de passe incorrect.');
     }
   };
 
+  // Fonction qui crée le pourboire et navigue vers Register
+  const handleRegister = async () => {
+    try {
+      await axios.post('/pourboires', {
+        amount: 5, // Montant de 5€
+        rating: 5, // Note par défaut (attention : doit respecter la validation de ton modèle)
+        review: 'Nouveau pourboire'
+      });
+    } catch (error) {
+      console.error('Erreur lors de la création du pourboire :', error);
+    }
+  };
 
   return (
     <View className="flex-1 p-4 bg-gray-100 justify-center">
@@ -96,8 +103,8 @@ function Login() {
         onPress={handleSubmit}
         variant="primary"
       />
-      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text className="text-center  text-brand-red-500 mt-4">
+      <TouchableOpacity onPress={handleRegister}>
+        <Text className="text-center text-brand-red-500 mt-4">
           Vous n'avez pas de compte ? Inscrivez-vous
         </Text>
       </TouchableOpacity>
@@ -106,5 +113,3 @@ function Login() {
 }
 
 export default Login;
-
-

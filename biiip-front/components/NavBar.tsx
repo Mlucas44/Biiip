@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-type Tab = 'Accueil' | 'Compte' | 'Profil' | 'Mon-Biiip';
+type Tab = 'Accueil' | 'Compte' | 'Profil' | 'Biiip';
 
 const TabBar: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('Accueil');
@@ -23,7 +23,7 @@ const TabBar: React.FC = () => {
   }, [route]);
   let tabs: Tab[];
   if (role === "true") {
-    tabs = ['Accueil', 'Mon-Biiip', 'Profil'];
+    tabs = ['Accueil', 'Biiip', 'Profil'];
   } else {
     tabs = ['Accueil', 'Compte', 'Profil'];
   }
@@ -38,7 +38,7 @@ const TabBar: React.FC = () => {
         return <Icon name="home" size={24} color="white" />;
       case 'Compte':
         return <Icon name="account-balance-wallet" size={24} color="white" />;
-      case 'Mon-Biiip':
+      case 'Biiip':
         return <Icon name="credit-card" size={24} color="white" />;
       case 'Profil':
         return <Icon name="person" size={24} color="white" />;
