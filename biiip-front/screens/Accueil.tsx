@@ -12,8 +12,10 @@ import Layout from '../components/Layout';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AccueilBanner from '../components/AccueilBanner';
 import TransactionHistory from '../components/TransactionHistory';
+import Avis from '../components/Avis';
 import BarChart from '../components/BarChart';
 import axios from '../axiosConfig';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type RootStackParamList = {
   Historique: undefined;
@@ -34,9 +36,15 @@ function Accueil() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [role, setRole] = useState<string | null>(null);
 
   // Utiliser useEffect pour récupérer les données lors du montage du composant
   useEffect(() => {
+    const loadRole = async () => {
+      const storedRole = await AsyncStorage.getItem('role');
+      setRole(storedRole);
+    };
+
     const fetchTransactions = async () => {
       try {
         const response = await axios.get('/pourboires');
@@ -48,10 +56,11 @@ function Accueil() {
         setIsLoading(false);
       }
     };
-
+    loadRole();
     fetchTransactions();
   }, []);
 
+  const shouldShowRetirer = role == "true";
 
   if (isLoading) {
     return (
@@ -84,7 +93,9 @@ function Accueil() {
         <AccueilBanner transactions={transactions} />
 
         <TransactionHistory transactions={transactions} />
-
+        {shouldShowRetirer && (
+          <Avis />
+        )}
         {/* Graphique */}
         <BarChart />
 

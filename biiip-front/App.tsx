@@ -12,6 +12,7 @@ import Accueil from './screens/Accueil';
 import Compte from './screens/Compte';
 import Profil from './screens/Profil';
 import Historique from './screens/Historique';
+import Avis from './screens/Avis';
 import Statistiques from './screens/Statistiques';
 import Retrait from './screens/Retrait';
 import RetraitSolde from './screens/RetraitSolde';
@@ -70,6 +71,11 @@ function App() {
           <Stack.Screen
             name="Historique"
             component={Historique}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Avis"
+            component={Avis}
             options={{ headerShown: false }}
           />
           <Stack.Screen
